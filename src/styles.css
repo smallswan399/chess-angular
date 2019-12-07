@@ -1,0 +1,38 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('../node_modules/bootswatch/flatly/bootstrap.css');
+@import url('../node_modules/font-awesome/css/font-awesome.css');
+@import url('../node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css');
+@import url('../node_modules/oakmac-chessboard/src/chessboard.css');
+@import url('../bower_components/ez-space-css-repo/css/ez-space.css');
+@import url('./assets/direct-chat.css');
+@import url('../node_modules/ngx-toastr/toastr.css');
+@import url('../node_modules/ladda/dist/ladda-themeless.min.css');
+
+body {
+    padding-top: 70px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+/* input,
+select,
+textarea {
+    max-width: 280px;
+} */
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}

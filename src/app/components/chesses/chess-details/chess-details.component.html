@@ -1,0 +1,129 @@
+<div style="margin-bottom: 10px">
+    <button type="button" class="btn btn-primary btn-sm" *ngIf="(Identity$ | async)?.isAuthenticated === true && !(game)?.fullPlayer && notPlayer === true"
+        (click)="join()">Play</button>
+</div>
+<div class="row">
+    <div class="col-md-2 col-sm-3" *ngIf="game?.blackPlayerId === (Identity$ | async)?.id">
+        <app-player-details *ngIf="game?.whitePlayer" [chessId]="game.id" [color]="Color.White"></app-player-details>
+        <app-player-details *ngIf="game?.blackPlayer" [chessId]="game.id" [color]="Color.Black"></app-player-details>
+    </div>
+    <div class="col-md-2 col-sm-3" *ngIf="game?.whitePlayerId === (Identity$ | async)?.id">
+        <app-player-details *ngIf="game?.blackPlayer" [chessId]="game.id" [color]="Color.Black"></app-player-details>
+        <app-player-details *ngIf="game?.whitePlayer" [chessId]="game.id" [color]="Color.White"></app-player-details>
+    </div>
+    <div class="col-md-2 col-sm-3" *ngIf="game?.whitePlayerId !== (Identity$ | async)?.id && game?.blackPlayerId !== (Identity$ | async)?.id">
+        <app-player-details *ngIf="game?.blackPlayer" [chessId]="game.id" [color]="Color.Black"></app-player-details>
+        <app-player-details *ngIf="game?.whitePlayer" [chessId]="game.id" [color]="Color.White"></app-player-details>
+    </div>
+    <div class="col-md-5 col-sm-6">
+        <div class="sm-mb-20">
+            <div id="outer-box">
+                <div id="board" style="width: 100%"></div>
+                <div id="inner-box" *ngIf="showOverlay === true">
+                    <div>
+                        <button class="btn btn-success" type="button" *ngIf="!notPlayer && !imReady" (click)="ready()">I'm ready</button>
+
+                        <div *ngIf="notPlayer === true">
+                            <i class="fa fa-spinner fa-5x fa-spin" aria-hidden="true"></i>
+                            <div>
+                                Waiting for game start
+                            </div>
+
+                        </div>
+                        <div *ngIf="imReady === true">
+                            <i class="fa fa-spinner fa-5x fa-spin" aria-hidden="true"></i>
+                            <div>
+                                Waiting for the opposite
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix sm-mt-10" *ngIf="!game?.finished && game?.bothPlayerAlready === true">
+                <button class="btn btn-warning pull-left" (click)="offerDraw()" [disabled]="game?.blackOfferedDraw === true || game?.whiteOfferedDraw == true">Offer Draw</button>
+                <button class="btn btn-danger pull-right" (click)="resign()">Resign</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-2 col-sm-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                History moves
+            </div>
+            <div class="panel-body" style="min-height: 200px">
+                <ul style="list-style: none; margin: 0; padding: 0; max-height: 200px; overflow-y: auto">
+                    <li *ngFor="let item of historyMoves">
+                        {{item.index}} {{item.moves[0]}} {{item.moves[1]}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Game information
+            </div>
+            <div class="panel-body" style="min-height: 200px">
+                <ul class="list-unstyled">
+                    <li>Timing: {{game?.chessConfiguration.timing | timing}}</li>
+                    <li>ThreeSecondAllegro: {{game?.chessConfiguration.threeSecondAllegro}}</li>
+                    <li *ngIf="game?.finished === true">
+                        Game finish. {{game?.gameResult | gameResultEnum}}
+                    </li>
+                    <li *ngIf="game?.finished === false">
+                        In Game
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 hidden-xs hidden-sm">
+        <app-chat [chessId]="game?.id"></app-chat>
+    </div>
+
+    <div class="modal fade" bsModal #gameFinishModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1"
+        role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Game over</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="rejectNewGameAfterFinish()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span *ngIf="game?.finished === true">
+                        Game finish. {{game?.gameResult | gameResultEnum}}
+                    </span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="rejectNewGameAfterFinish()">Cancel</button>
+                    <button type="button" [disabled]="disableRequestNewGameAfterFinishButton" class="btn btn-primary" (click)="requestNewGameAfterFinish()"
+                        title="Request new game with current opponent">New game</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" bsModal #drawReplyModal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1"
+        role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Draw offer</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="rejectOfferDraw()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <strong>Your opponent is offering a draw this game. Do you accept the offer?</strong>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="rejectOfferDraw()">No</button>
+                    <button type="button" class="btn btn-primary" (click)="acceptOfferDraw()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="panel" [ngClass]="{'panel-success': isMyTurn === true, 'panel-primary': isMyTurn === false}">
+    <div class="panel-heading">
+        <i class="fa fa-user"></i> {{(user$ | async)?.userName}}
+    </div>
+    <div class="panel-body">
+        <div class="clearfix">
+            <img class="pull-left" src="{{color === Color.White ? 'https://s3-us-west-2.amazonaws.com/chessimg/wK.png' : 'https://s3-us-west-2.amazonaws.com/chessimg/bK.png'}}"
+                alt="" srcset="">
+            <div class="pull-right">
+                <!-- <strong style="font-size: 120%; line-height: 80px" *ngIf="timeLeft && bothPlayerAlready === true">
+                    <i class="fa fa-hourglass-half" [ngClass]="{'fa-spin': isMyTurn === true}"></i> &nbsp;
+                    <span count-down units="Hours | Minutes | Seconds" [text]="{Hours:':', Minutes:':',Seconds:' '}" [duration]="timeLeft" [runAtStart]="isMyTurn === true" (reached)="outOfTime()"></span>
+                </strong> -->
+
+                <countdown *ngIf="countDownConfig && bothPlayerAlready === true" [config]="countDownConfig">
+                    <strong style="font-size: 120%; line-height: 80px">
+                        <i class="fa fa-hourglass-half" [ngClass]="{'fa-spin': isMyTurn === true}"></i> &nbsp; $!h!:$!m!:$!s!
+                    </strong>
+                </countdown>
+            </div>
+        </div>
+        <div>
+            <span class="label label-success">{{(user$ | async)?.win}} wins</span>
+            <span class="label label-info">{{(user$ | async)?.draw}} draws</span>
+            <span class="label label-warning">{{(user$ | async)?.lose}} losses</span>
+            <!-- <button type="button" (click)="stop()">Stop</button> -->
+        </div>
+    </div>
+</div>

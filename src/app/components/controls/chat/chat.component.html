@@ -1,0 +1,37 @@
+<div class="box box-primary direct-chat direct-chat-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Direct Chat</h3>
+    </div>
+    <div class="box-body">
+        <div class="direct-chat-messages" custom-scroll-bar (onTotalScrollBack)="onTotalScrollBack()">
+            <app-chat-list-item onCreate [data]="isLast" (onCreateRun)="isLastItemHandler()" *ngFor="let item of messages; let isLast = last" [message]="item"></app-chat-list-item>
+        </div>
+        <div class="direct-chat-contacts">
+            <ul class="contacts-list">
+                <li>
+                    <a href="#">
+                        <img class="contacts-list-img" src="https://bootdey.com/img/Content/user_1.jpg">
+
+                        <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                                Count Dracula
+                                <small class="contacts-list-date pull-right">2/28/2015</small>
+                            </span>
+                            <span class="contacts-list-msg">How have you been? I was...</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="box-footer">
+        <form (ngSubmit)="postMessage()" *ngIf="(Identity$ | async)?.isAuthenticated">
+            <div class="input-group">
+                <input [disabled]="!isReadyToChat" type="text" name="message" placeholder="Type Message ..." class="form-control" [(ngModel)]="messageCreate.content">
+                <span class="input-group-btn">
+                    <button [disabled]="!isReadyToChat" type="submit" class="btn btn-primary btn-flat">Send</button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>

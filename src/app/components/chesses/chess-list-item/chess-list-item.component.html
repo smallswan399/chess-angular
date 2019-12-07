@@ -1,0 +1,12 @@
+<td>{{game.id}}</td>
+<td>{{game.title}}</td>
+<td>
+    <app-player [userId]="game.whitePlayerId"></app-player>
+</td>
+<td>
+    <app-player [userId]="game.blackPlayerId"></app-player>
+</td>
+<td>
+    <button class="btn btn-primary btn-sm" *ngIf="(Identity$ | async)?.isAuthenticated === true && !(game)?.fullPlayer && notPlayer === true" (click)="join(game.id)">Join</button>
+    <a routerLink="/chesses/details/{{game.id}}" class="btn btn-primary btn-sm">View</a>
+</td>

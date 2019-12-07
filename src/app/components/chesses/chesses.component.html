@@ -1,0 +1,114 @@
+<div style="margin-bottom: 10px">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-sm" (click)="staticModal.show()">
+        New game
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}">
+        <ngx-loading [show]="createChessLoading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+            
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form (ngSubmit)="formSubmit()">
+                    <div class="modal-header">
+                        <button type="button" class="close" (click)="staticModal.hide()">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">Game Init</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Timing</label>
+                            <div>
+                                <select id="timing-type" name="timing-type" class="form-control input-sm" style="width: 180px; display: inline-block">
+                                    <option>Blitz</option>
+                                    <option>Rapid</option>
+                                </select>
+                                <select id="timing" name="timing" class="form-control input-sm" style="width: 180px; display: inline-block" [(ngModel)]="gameInit.timing">
+                                    <option [value]="Timing.Game5Minutes">Game/5 minutes</option>
+                                    <option [value]="Timing.Game10Minutes">Game/10 minutes</option>
+                                    <option [value]="Timing.Game15Minutes">Game/15 minutes</option>
+                                </select>
+                                <label>
+                                    <input id="threeSecondAllegro" name="threeSecondAllegro" type="checkbox" [(ngModel)]="gameInit.threeSecondAllegro"> +3 sec. allegro
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="play">Play</label>
+                                    <div>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="color" [value]="Color.White" [(ngModel)]="gameInit.color">White
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="color" [value]="Color.Black" [(ngModel)]="gameInit.color">Black
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="play">Rated game</label>
+                                    <div>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="ratedGame" [value]="true" [(ngModel)]="gameInit.ratedGame">Yes
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="ratedGame" [value]="false" [(ngModel)]="gameInit.ratedGame">No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input id="title" name="title" type="text" [(ngModel)]="gameInit.title" id="title" class="form-control input-sm">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" (click)="staticModal.hide()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Play</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>White</th>
+                <th>Black</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr app-chess-list-item [game]="item" *ngFor="let item of (chesses$ | async)">
+                <!-- <td>{{item.id}}</td>
+                <td>{{item.title}}</td>
+                <td>
+                    <app-player [userId]="item.whitePlayerId"></app-player>
+                </td>
+                <td>
+                    <app-player [userId]="item.blackPlayerId"></app-player>
+                </td>
+                <td>
+                    <button class="btn btn-primary btn-sm" *ngIf="(Identity$ | async)?.isAuthenticated === true" (click)="join(item.id)">Join</button>
+                    <a routerLink="/chesses/details/{{item.id}}" class="btn btn-primary btn-sm">View</a>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+</div>

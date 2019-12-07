@@ -1,0 +1,53 @@
+﻿<h2>Register</h2>
+<div class="row">
+    <div class="col-md-6">
+        <form (ngSubmit)="registerUserSubmit()" class="form-horizontal">
+            <h4>Create a new account</h4>
+            <div class="form-group">
+                <label for="" class="col-md-3 control-label">UserName</label>
+                <div class="col-md-9">
+                    <input type="text" name="UserName" id="UserName" class="form-control" [(ngModel)]="registerUser.userName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-3 control-label">Email</label>
+                <div class="col-md-9">
+                    <input type="email" name="Email" id="Email" class="form-control" [(ngModel)]="registerUser.email">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="" class="col-md-3 control-label">Password</label>
+                <div class="col-md-9">
+                    <input type="password" name="Password" id="Password" class="form-control" [(ngModel)]="registerUser.password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-3 control-label">Confirm Password</label>
+                <div class="col-md-9">
+                    <input type="password" name="ConfirmPassword" id="ConfirmPassword" class="form-control" [(ngModel)]="registerUser.confirmPassword">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="" class="col-md-3 control-label">FirstName</label>
+                <div class="col-md-9">
+                    <input type="text" name="FirstName" id="FirstName" class="form-control" [(ngModel)]="registerUser.firstName">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="" class="col-md-3 control-label">LastName</label>
+                <div class="col-md-9">
+                    <input type="text" name="LastName" id="LastName" class="form-control" [(ngModel)]="registerUser.lastName">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9">
+                    <button type="submit" class="btn btn-primary" [ladda]="isLoading">Register</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

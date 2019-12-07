@@ -1,0 +1,40 @@
+<div class="direct-chat-msg" [ngClass]="{'right': isSender === true}">
+    <div class="direct-chat-info clearfix">
+        <span class="direct-chat-name" [ngClass]="{'pull-left': !isSender, 'pull-right': isSender === true}">{{(sender$ | async)?.userName}}</span>
+        <span class="direct-chat-timestamp" [ngClass]="{'pull-left': isSender === true, 'pull-right': !isSender}">{{message.createdDate | date}}</span>
+    </div>
+    <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_1.jpg" alt="Message User Image">
+    <div class="direct-chat-text">
+        {{message.content}}
+    </div>
+</div>
+<!-- <div class="direct-chat-msg">
+                <div class="direct-chat-info clearfix">
+                    <span class="direct-chat-name pull-left">Alexander Pierce</span>
+                    <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+                </div>
+                <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_1.jpg" alt="Message User Image">
+                <div class="direct-chat-text">
+                    Is this template really for free? That's unbelievable!
+                </div>
+            </div>
+            <div class="direct-chat-msg right">
+                <div class="direct-chat-info clearfix">
+                    <span class="direct-chat-name pull-right">Sarah Bullock</span>
+                    <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
+                </div>
+                <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_2.jpg" alt="Message User Image">
+                <div class="direct-chat-text">
+                    You better believe it!
+                </div>
+            </div> -->
+            <!-- <div class="direct-chat-msg right">
+                    <div class="direct-chat-info clearfix">
+                        <span class="direct-chat-name pull-right">Sarah Bullock</span>
+                        <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
+                    </div>
+                    <img class="direct-chat-img" src="https://bootdey.com/img/Content/user_2.jpg" alt="Message User Image">
+                    <div class="direct-chat-text">
+                        You better believe it!
+                    </div>
+                </div> -->

@@ -1,0 +1,30 @@
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a routerLink="/home" class="navbar-brand">Chess</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a routerLink="/chesses">Games</a>
+                </li>
+                <!-- <li>
+                    <a href="#">{{connection?.id}}</a>
+                </li> -->
+            </ul>
+            <ul class="nav navbar-nav navbar-right" *ngIf="!(Identity$ | async)?.isAuthenticated">
+                <li><a routerLink="/account/signup">Register</a></li>
+                <li><a href="javascript:void(0);" (click)="login()">Login</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" *ngIf="(Identity$ | async)?.isAuthenticated">
+                <li><a href="javascript:void(0);" routerLink="/account">{{(Identity$ | async)?.getName()}}</a></li>
+                <li><a href="javascript:void(0);" (click)="logOut()">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
